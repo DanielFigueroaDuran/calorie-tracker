@@ -1,23 +1,29 @@
 import { useState, ChangeEvent } from "react"
 import { categories } from "../data/category"
+import { Activity } from "../types";
 
 const Form = () => {
 
-      const [activity, setActivity] = useState({
-            category: '',
+      const [activity, setActivity] = useState<Activity>({
+            category: 1,
             name: '',
             calories: 0
       });
 
       const handleChange = (event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
+
+            const isNumberField = ['category', 'calories'].includes(event.target.id);
+
+            //console.log(isNumberField);
+
             setActivity({
                   ...activity,
-                  [event.target.id]: event.target.value
+                  [event.target.id]: isNumberField ? +event.target.value : event.target.value
             });
 
       }
 
-      console.log(activity);
+      // console.log(activity);
 
       return (
             <form className="space-y-5 bg-white shadow p-10 rounded-lg">

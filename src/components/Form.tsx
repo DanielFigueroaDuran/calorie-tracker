@@ -23,6 +23,11 @@ const Form = () => {
 
       }
 
+      const isValidActivity = () => {
+            const { name, calories } = activity
+            return name.trim() !== '' && calories > 0
+      }
+
       // console.log(activity);
 
       return (
@@ -66,9 +71,10 @@ const Form = () => {
                   </div>
 
                   <input
-                        className="bg-gray-800 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer"
+                        className="bg-gray-800 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer disabled:opacity-10"
                         type="submit"
                         value="Guardar Comida o Guardar Ejercicio"
+                        disabled={!isValidActivity()}
                   />
 
             </form>

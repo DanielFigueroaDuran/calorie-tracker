@@ -1,14 +1,22 @@
+import { useState } from "react"
 import { categories } from "../data/category"
 
 const Form = () => {
+
+      const [activity, setActivity] = useState({
+            category: '',
+            name: '',
+            calories: 0
+      });
+
       return (
             <form className="space-y-5 bg-white shadow p-10 rounded-lg">
                   <div className="grid grid-cold-1 gap-3">
                         <label htmlFor="category" className="font-bold">Categoria:</label>
                         <select
                               className="border border-slate-300  p-2 rounded-lg w-full bg-white"
-                              name=""
                               id="category"
+                              value={activity.category}
                         >
                               {categories.map(category => (
                                     <option key={category.id} value={category.id}>{category.name}</option>
@@ -17,22 +25,24 @@ const Form = () => {
                   </div>
 
                   <div className="grid grid-cold-1 gap-3">
-                        <label htmlFor="activity" className="font-bold">Actividad:</label>
+                        <label htmlFor="name" className="font-bold">Actividad:</label>
                         <input
                               className="border border-slate-300 p-2 rounded-lg"
                               type="text"
-                              id="activity"
+                              id="name"
                               placeholder="Ej. Comida, Jugo de Naranja, Ensalada, Ejercicio, Presas, Bicicleta"
+                              value={activity.name}
                         />
                   </div>
 
                   <div className="grid grid-cold-1 gap-3">
-                        <label htmlFor="category" className="font-bold">Categorias:</label>
+                        <label htmlFor="calories" className="font-bold">Calorias:</label>
                         <input
                               className="border border-slate-300 p-2 rounded-lg"
                               type="number"
-                              id="category"
+                              id="calories"
                               placeholder="Calorias Ej. 300 o 500"
+                              value={activity.calories}
                         />
                   </div>
 

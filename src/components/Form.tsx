@@ -34,7 +34,7 @@ const Form = ({ dispatch }: FormProps) => {
 
       const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            console.log('submit...');
+
             dispatch({ type: 'save-activity', payload: { newActivity: activity } });
       }
 

@@ -1,5 +1,7 @@
 import { Activity } from "../types"
-
+import { categories } from "../data/categories";
+import { useMemo } from "react";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 type ActivityProps = {
       activities: Activity[]
@@ -7,6 +9,9 @@ type ActivityProps = {
 
 const ActivityList = ({ activities }: ActivityProps) => {
 
+      const categoryName = useMemo(() =>
+            (category: Activity['category']) => categories.map((cat => cat.id === category ? cat.name : ''))
+            , [activities])
       //console.log(activities);
       return (
             <>
@@ -17,7 +22,10 @@ const ActivityList = ({ activities }: ActivityProps) => {
                   {activities.map(activitie => (
                         <div key={activitie.id} className="px-5 py-10 bg-slate-100 mt-5 flex justify-between">
                               <div className="space-y-2 relative">
-                                    <p>{activitie.category}</p>
+                                    <p className={`absolute -top-8 -left-8 rounded-sm px-10 py-2 text-white uppercase font-bold
+                                           ${activitie.category === 1 ? 'bg-lime-500' : 'bg-orange-500'}`}>
+                                          {categoryName(+activitie.category)}
+                                    </p>
                                     <p className="text-2xl font-bold">{activitie.name}</p>
                                     <p className="font-black text-4xl text-lime-500">
                                           {activitie.calories} {''}
@@ -25,8 +33,10 @@ const ActivityList = ({ activities }: ActivityProps) => {
                                     </p>
                               </div>
 
-                              <div>
-
+                              <div className="flex gap-5 items-center">
+                                    <button>
+                                          <PencilSquareIcon className=" h-8 w-8 text-gray-800" />
+                                    </button>
                               </div>
                         </div>
                   ))}

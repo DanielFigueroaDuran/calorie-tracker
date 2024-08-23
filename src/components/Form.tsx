@@ -1,13 +1,14 @@
-import { useState, ChangeEvent, FormEvent, Dispatch } from "react"
+import { useState, ChangeEvent, FormEvent, Dispatch, useEffect } from "react"
 import { v4 as uuidv4 } from "uuid";
 import { categories } from "../data/categories"
 import { Activity } from "../types";
-import { ActivityActions } from "../reducers/activity-reducer";
+import { ActivityActions, ActivityState } from "../reducers/activity-reducer";
 
 type FormProps = {
-      dispatch: Dispatch<ActivityActions>
+      dispatch: Dispatch<ActivityActions>,
+      state: ActivityState
 }
-const Form = ({ dispatch }: FormProps) => {
+const Form = ({ dispatch, state }: FormProps) => {
 
       const initialState: Activity = {
             id: uuidv4(),
@@ -18,15 +19,22 @@ const Form = ({ dispatch }: FormProps) => {
 
       const [activity, setActivity] = useState<Activity>(initialState);
 
+      useEffect(() => {
+            if (state.activeId) {
+                  const selectedActive = state.activities.filter(stateActivity => stateActivity.id === state.activeId)[0];
+                  setActivity(selectedActive);
+            }
+      }, [state.activeId])
+
       const handleChange = (event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
 
-            const isNumberField = ['category', 'calories'].includes(event.target.id);
+            //const isNumberField = ['category', 'calories'].includes(event.target.id);
 
             //console.log(isNumberField);
 
             setActivity({
                   ...activity,
-                  [event.target.id]: isNumberField ? +event.target.value : event.target.value
+                  [event.target.id]: event.target.value
             });
 
       }

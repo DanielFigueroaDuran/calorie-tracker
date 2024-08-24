@@ -8,35 +8,35 @@ type FormProps = {
       dispatch: Dispatch<ActivityActions>,
       state: ActivityState
 }
-const Form = ({ dispatch, state }: FormProps) => {
 
-      const initialState: Activity = {
-            id: uuidv4(),
-            category: 1,
-            name: '',
-            calories: 0
-      }
+const initialState: Activity = {
+      id: uuidv4(),
+      category: 1,
+      name: '',
+      calories: 0
+}
+
+const Form = ({ dispatch, state }: FormProps) => {
 
       const [activity, setActivity] = useState<Activity>(initialState);
 
       useEffect(() => {
             if (state.activeId) {
-                  const selectedActive = state.activities.filter(stateActivity => stateActivity.id === state.activeId)[0];
-                  setActivity(selectedActive);
+                  const selectedActivity = state.activities.filter(stateActivity => stateActivity.id === state.activeId)[0]
+                  setActivity(selectedActivity);
             }
       }, [state.activeId])
 
       const handleChange = (event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
 
-            //const isNumberField = ['category', 'calories'].includes(event.target.id);
+            const isNumberField = ['category', 'calories'].includes(event.target.id);
 
             //console.log(isNumberField);
 
             setActivity({
                   ...activity,
-                  [event.target.id]: event.target.value
+                  [event.target.id]: isNumberField ? +event.target.value : event.target.value
             });
-
       }
 
       const isValidActivity = () => {
@@ -106,7 +106,6 @@ const Form = ({ dispatch, state }: FormProps) => {
                         value={activity.category === 1 ? 'Guardar Comida' : 'Guardar Ejercicio'}
                         disabled={!isValidActivity()}
                   />
-
             </form>
       )
 }
